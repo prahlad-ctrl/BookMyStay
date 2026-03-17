@@ -1,6 +1,6 @@
 public class BookMyStayApp {
     public static void main(String[] args) {
-        System.out.println("Initializing Room Data...");
+        System.out.println("Initializing Hotel Booking System...");
         System.out.println("--------------------------------------------------");
 
         // Room Initialization
@@ -8,25 +8,26 @@ public class BookMyStayApp {
         Room doubleRoom = new DoubleRoom(102, 150.0, true);
         Room suiteRoom = new SuiteRoom(103, 300.0, true);
 
-        // Static Availability Variables
-        boolean isSingleRoomAvailable = true;
-        boolean isDoubleRoomAvailable = false;
-        boolean isSuiteRoomAvailable = true;
-
-        // Display Room Details
-        System.out.println("Room Details:");
+        System.out.println("Sample Room Details:");
         singleRoom.displayDetails();
         doubleRoom.displayDetails();
         suiteRoom.displayDetails();
-        System.out.println();
-
-        // Display Availability
-        System.out.println("Availability Status:");
-        System.out.println("Room 101 Available: " + isSingleRoomAvailable);
-        System.out.println("Room 102 Available: " + isDoubleRoomAvailable);
-        System.out.println("Room 103 Available: " + isSuiteRoomAvailable);
-
         System.out.println("--------------------------------------------------");
-        System.out.println("Initialization complete.");
+
+        // Centralized Inventory Management
+        RoomInventory inventory = new RoomInventory();
+
+        System.out.println("Initial Inventory State:");
+        inventory.displayInventory();
+        System.out.println("--------------------------------------------------");
+
+        System.out.println("Updating availability to simulate a booking (1 Single Room booked)...");
+        inventory.updateAvailability("Single", -1);
+
+        System.out.println("Inventory State After Booking:");
+        inventory.displayInventory();
+        System.out.println("--------------------------------------------------");
+
+        System.out.println("System Initialization and Inventory Check Complete.");
     }
 }
