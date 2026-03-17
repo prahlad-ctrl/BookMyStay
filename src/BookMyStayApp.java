@@ -1,17 +1,77 @@
+import java.util.Scanner;
+
+class Room {
+    protected int type;
+    protected boolean isAvailable = true;
+
+    public Room(int type) {
+        this.type = type;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void checkIn() {
+        isAvailable = false;
+    }
+
+    public void display() {
+        System.out.println("Room Type: " + type + " | Available: " + isAvailable);
+    }
+}
+
+class Booking {
+    String customerName;
+    int roomType;
+
+    public Booking(String customerName, int roomType) {
+        this.customerName = customerName;
+        this.roomType = roomType;
+    }
+
+    public void display() {
+        System.out.println("Customer: " + customerName);
+        System.out.println("Room Type: " + roomType);
+    }
+}
+
 public class BookMyStayApp {
+
     public static void main(String[] args) {
-        BookingRequestQueue bookingQueue = new BookingRequestQueue();
-        RoomInventory inventory = new RoomInventory();
-        RoomAllocationService allocationService = new RoomAllocationService();
 
-        Reservation r1 = new Reservation("Abhi", "Single");
-        Reservation r2 = new Reservation("Subha", "Single");
-        Reservation r3 = new Reservation("Vanmathi", "Suite");
+        Scanner sc = new Scanner(System.in);
 
-        bookingQueue.addRequest(r1);
-        bookingQueue.addRequest(r2);
-        bookingQueue.addRequest(r3);
+        Room[] rooms = {
+                new Room(1),
+                new Room(2),
+                new Room(3)
+        };
 
-        allocationService.processQueue(bookingQueue, inventory);
+        System.out.print("Enter customer name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter booked room type (1-3): ");
+        int type = sc.nextInt();
+
+        if (type < 1 || type > 3) {
+            System.out.println("Invalid room type");
+            return;
+        }
+
+        Room selectedRoom = rooms[type - 1];
+
+        if (!selectedRoom.isAvailable()) {
+            System.out.println("Room already occupied!");
+            return;
+        }
+
+        Booking booking = new Booking(name, type);
+
+        selectedRoom.checkIn();
+
+        System.out.println("\nCheck-In Successful!");
+        booking.display();
+        System.out.println("Room status updated.");
     }
 }
